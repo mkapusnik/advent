@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'dart:math';
 
 class Board {
@@ -56,12 +55,9 @@ class Board {
     return max(value, 0) + max(element, 0);
   }
 
-  @override
-  String toString() {
-    return _rows.join('|');
-  }
+  List<String> get rows => _rows.map((e) => e.join(',')).toList();
+  List<String> get columns => _columns.map((e) => e.join(',')).toList();
 }
-
 
 Future<void> main() async {
   final File input = File('4/input.txt');
@@ -76,20 +72,25 @@ Future<void> main() async {
   }
 
   print("Loaded ${boards.length} boards ...");
-  for(final board in boards) {
-    print('Board:');
-    print(board);
-  }
 
+  Board lastWinner = boards[0];
+  int lastNumber = -1;
   for (final number in callNumbers.split(',').map((e) => int.tryParse(e) ?? 0)) {
       boards.forEach((board) => board.callNumber(number));
       final List<Board> winners = boards.where((board) => board.isWinner()).toList();
+      boards.removeWhere((board) => board.isWinner());
+
       if(winners.isNotEmpty) {
-        int position = boards.indexOf(winners.first);
-        print("We have a winner! ... Board #$position");
-        int score = number * winners.first.score();
-        print("Final score is: $score");
-        return;
+        lastWinner = winners.first;
+        lastNumber = number;
       }
   }
+
+  print('We have the last winner!');
+  int score = lastNumber * lastWinner.score();
+  print("Final score is: $score");
+  print("Number: $lastNumber | Score: ${lastWinner.score()}");
+  for(final row in lastWinner.rows) print(row);
+  print('   ----    ');
+  for(final column in lastWinner.columns) print(column);
 }
