@@ -1,7 +1,7 @@
 import 'dart:io';
 
 Future<void> main() async {
-  final File input = File('input.txt');
+  final File input = File('1/input.txt');
   final List<String> lines = await input.readAsLines();
 
   int increases = 0;
