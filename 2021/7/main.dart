@@ -22,11 +22,14 @@ Future<void> main() async {
     results.insert(i, consumption);
   }
 
-
   print("Results: $results");
   print("Lowest fuel: $lowest | Target: $target");
 }
 
 int calculateFuel(int target, List<int> crabs) {
-  return crabs.map((e) => (target - e).abs()).reduce((value, element) => value + element);
+  return crabs.map((e) => price((target - e).abs())).reduce((value, element) => value + element);
+}
+
+int price(int distance) {
+  return ((distance / 2) * (1 + distance)).round();
 }
