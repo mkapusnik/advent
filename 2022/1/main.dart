@@ -21,4 +21,8 @@ Future<void> main() async {
 
   var max = storage.last;
   print("Largest sum of calories: $max");
+  print("Storage length: ${storage.length}");
+
+  var top = storage.sublist(storage.length-3);
+  print("Largest sum of calories for top 3 elves: ${top.reduce((value, element) => value + element)}");
 }
