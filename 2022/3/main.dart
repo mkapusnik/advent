@@ -5,13 +5,15 @@ Future<void> main() async {
   final List<String> lines = await input.readAsLines();
 
   int priorities = 0;
-  for (final line in lines) {
-    print('Rucksack: $line');
-    final String first = line.substring(0, line.length ~/ 2);
-    final String second = line.substring(line.length ~/ 2);
+  for (int i = 0; i < lines.length; i += 3) {
+    final String first = lines[i];
+    final String second = lines[i+1];
+    final String third = lines[i+2];
     print('1:$first');
     print('2:$second');
-    int common = findCommonLetters(first, second);
+    print('3:$third');
+
+    int common = findCommonLetters(first, second, third);
     print('Common priority: $common');
     priorities += common;
     print("-----------------------------");
@@ -21,14 +23,12 @@ Future<void> main() async {
   print("Total priorities: $priorities");
 }
 
-int findCommonLetters(String first, String second) {
-  first.split('').forEach((element) {
-    if(second.contains(element)) {
-      print('Common letter: $element');
-    }
-  });
-
-  return getPriority(first.split('').firstWhere((element) => second.contains(element)));
+int findCommonLetters(String first, String second, String third) {
+  final String letter = first
+      .split('')
+      .firstWhere((element) => second.contains(element) && third.contains(element));
+  print('Common letter: $letter');
+  return getPriority(letter);
 }
 
 int getPriority(String letter) {
