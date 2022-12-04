@@ -4,31 +4,21 @@ Future<void> main() async {
   final File input = File('1/input.txt');
   final List<String> lines = await input.readAsLines();
 
-  int increases = 0;
-  int? measurementA, measurementB, measurementC;
+  int calories = 0;
+  List<int> storage = [];
   for (final line in lines) {
-    int current = int.tryParse(line) ?? 0;
-    if(measurementA == null) {
-      measurementA = current;
+    if(line.isEmpty) {
+      storage.add(calories);
+      calories = 0;
       continue;
     }
-    if(measurementB == null) {
-      measurementB = current;
-      continue;
-    }
-    if(measurementC == null) {
-      measurementC = current;
-      continue;
-    }
-    int prevSum = measurementA + measurementB + measurementC;
-    int currentSum = measurementB + measurementC + current;
 
-    if(prevSum < currentSum) {
-      increases++;
-    }
-    measurementA = measurementB;
-    measurementB = measurementC;
-    measurementC = current;
+    int current = int.tryParse(line) ?? 0;
+    calories += current;
   }
-  print("Num of increases: $increases");
+  storage.add(calories);
+  storage.sort();
+
+  var max = storage.last;
+  print("Largest sum of calories: $max");
 }
