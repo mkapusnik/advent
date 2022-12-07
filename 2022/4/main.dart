@@ -11,9 +11,9 @@ Future<void> main() async {
     final List<int> first = assignedSections(elves[0]);
     final List<int> second = assignedSections(elves[1]);
 
-    if(first.every((element) => second.contains(element)))
+    if(first.any((element) => second.contains(element)))
       overlaps++;
-    else if(second.every((element) => first.contains(element)))
+    else if(second.any((element) => first.contains(element)))
       overlaps++;
   }
 
