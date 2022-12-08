@@ -38,11 +38,10 @@ Future<void> main() async {
 
   root.printStructure();
 
-  int sizeSummary = structure
-      .where((node) => node.totalSize() <= 100000)
-      .map((e) => e.totalSize())
-      .reduce((value, element) => value + element);
-  print("Size summary: $sizeSummary");
+  int minimum = 30000000 - (70000000 - root.totalSize());
+  final List<PathNode> candidates = structure.where((node) => node.totalSize() >= minimum).toList();
+  candidates.sort((a, b) => a.totalSize().compareTo(b.totalSize()));
+  print("Candidate size: ${candidates.first.totalSize()}");
 }
 
 List<PathNode> findChildren(String path) {
