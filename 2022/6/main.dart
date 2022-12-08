@@ -9,15 +9,14 @@ Future<void> main() async {
   lines[0][position];
   print("Marker position: $position");
 }
-
+const int markerLength = 14;
 int findMarker(String line) {
-  for (int i = 3; i < line.length; i++) {
+  for (int i = markerLength-1; i < line.length; i++) {
     Set<String> buffer = {};
-    buffer.add(line[i]);
-    buffer.add(line[i-1]);
-    buffer.add(line[i-2]);
-    buffer.add(line[i-3]);
-    if(buffer.length > 3) {
+    for(int l = 0; l < markerLength; l++) {
+      buffer.add(line[i - l]);
+    }
+    if(buffer.length >= markerLength) {
       print("Buffer: ${buffer.join(' | ')}");
       return i+1;
     }
