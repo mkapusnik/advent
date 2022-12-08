@@ -15,10 +15,9 @@ Future<void> main() async {
     final int origin = int.parse(match.group(2)!);
     final int target = int.parse(match.group(3)!);
 
-    for(int i = 1; i <= count; i++) {
-      final String crate = storage[origin]!.removeLast();
-      storage[target]!.add(crate);
-    }
+    final List<String> originList = storage[origin]!;
+    storage[target]!.addAll(originList.sublist(originList.length - count));
+    originList.removeRange(originList.length - count, originList.length);
   }
 
   print("-----------------------------");
