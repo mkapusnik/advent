@@ -11,41 +11,47 @@ Future<void> main() async {
     grid.add(line.split('').map((e) => int.parse(e)).toList());
   }
 
-  int visibleTrees = 0;
+  int score = 0;
   for(int y = 0; y < grid.length; y++) {
     for(int x = 0; x < grid[y].length; x++) {
-      if(isVisible(x, y)) visibleTrees++;
+      int candidate = calculateScore(x, y);
+      if(candidate > score) score = candidate;
     }
   }
-  print("Visible trees: $visibleTrees");
+  print("Max scenic score: $score");
 }
 
-bool isVisible(int x, int y) {
+int calculateScore(int x, int y) {
   final int value = grid[y][x];
-  bool left = true, right = true, top = true, bottom = true;
+  int scoreLeft = x,
+      scoreRight = grid[y].length - x - 1,
+      scoreTop = y,
+      scoreBottom = grid.length - y - 1;
   for(int i = x-1; i >= 0; i--) {
     if(grid[y][i] >= value) {
-      left = false;
+      scoreLeft = (x-i);
       break;
     }
   }
   for(int i = x+1; i < grid[y].length; i++) {
     if(grid[y][i] >= value) {
-      right = false;
+      scoreRight = (i-x);
       break;
     }
   }
   for(int i = y-1; i >= 0; i--) {
     if(grid[i][x] >= value) {
-      top = false;
+      scoreTop = (y-i);
       break;
     }
   }
   for(int i = y+1; i < grid.length; i++) {
     if(grid[i][x] >= value) {
-      bottom = false;
+      scoreBottom = (i-y);
       break;
     }
   }
-  return left || right || top || bottom;
+  int total = scoreLeft * scoreRight * scoreTop * scoreBottom;
+  //print("[$x,$y]: $value | $scoreTop * $scoreLeft * $scoreRight * $scoreBottom = $total");
+  return total;
 }
