@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "command",
+            "name": "Run Dart",
+            "program": "C:/Program Files/Git/git-bash.exe",
+            "args": [ "dart", "run", "1/main.dart"],
+        },
+        
+    ]
+}

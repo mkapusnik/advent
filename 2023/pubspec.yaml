@@ -1,0 +1,10 @@
+name: dartest
+description: Test Dart in Docker
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.2.3
+
+dependencies:
+  dart_console: ^1.0.0
